@@ -44,5 +44,7 @@
   (e 'n)
   )
 
+;; TODO: Add more use cases
+
 ;; (defmacro run [& program]
 ;;   `((make-evaluator) '(progn ~@program)))
