@@ -111,7 +111,9 @@
 (def built-in-functions {'+ #(apply + %)
                          '* #(apply * %)
                          '- #(apply - %)
-                         '/ #(apply / %)})
+                         '/ #(apply / %)
+                         'add #(apply + %)
+                         'prn prn})
 
 (defn make-evaluator
   "Returns a function that works as an evaluator,
@@ -123,3 +125,32 @@
 
 
 
+(defmacro run [& forms]
+  (let [evaluator# (make-evaluator)
+        forms-with-evaluator (map #(cons evaluator# %) forms)]
+     `([let e evaluator#] ~@forms-with-evaluator)))
+
+(defmacro runn [& s]
+  (println s)
+  (let [ev# (make-evaluator)]
+     (map #(list ev# %) s)))
+
+(macroexpand-1 '(runn 1 2 3))
+
+;(runn (add 2 3))
+
+
+(let [evaluator (make-evaluator)]
+  (evaluator '(set! a 20))
+  (evaluator '(prn a)))
+
+
+
+(defmacro bleh [s fun]
+  (println s)
+  (let [f# fun]
+    (map #(list f# %) s)))
+
+(macroexpand-1 '(bleh [5 10 30] inc))
+
+;(bleh [5 10 30])
