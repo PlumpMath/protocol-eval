@@ -124,7 +124,6 @@
       (evaluate exp env-ref))))
 
 
-
 (defmacro run [& forms]
   (let [evaluator# (make-evaluator)
         forms-with-evaluator (map #(cons evaluator# %) forms)]
@@ -154,3 +153,6 @@
 (macroexpand-1 '(bleh [5 10 30] inc))
 
 ;(bleh [5 10 30])
+
+; TODO: Can you see this?
+
